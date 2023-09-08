@@ -6,6 +6,8 @@ const resultsBox = document.querySelector(".result-box");
 const inputBox = document.getElementById("input-box");
 let availableKeywords;
 let results;
+let allPlayers;
+let answer;
 //Getting the data in dataArray and making a new array called availableKeywords
 fetch(apiEndpoint)
   .then((response) => {
@@ -16,9 +18,18 @@ fetch(apiEndpoint)
   })
   .then((data) => {
     const dataArray = data.map((item) => ({
-      name: item.name,
-      country: item.country
+        id: item.id,
+        name: item.name,
+        country: item.country,
+        events: item.events,
+        racket: item.racket,
+        handedness: item.handedness,
+        ranking: item.ranking,
+        age: item.age
     }));
+    allPlayers = dataArray;
+    answer = dataArray[0];
+    console.log(answer);
     availableKeywords = dataArray.map((item) => item.name);
   })
   .catch((error) => {
@@ -129,29 +140,137 @@ function highlightItem(index) {
 }
 
 const tableBody = document.getElementById("table-body");
-let rowCount = 0;
+
 function checkGuess(name){
-    const newRow = document.createElement("tr");
-    
-    // Increment the row count
-    rowCount++;
-    
-    // Create table cells (columns) and populate them
-    const cell1 = document.createElement("td");
-    cell1.textContent = inputBox.value;
-    const cell2 = document.createElement("td");
-    cell2.textContent = "Denmark";
-    const cell3 = document.createElement("td");
-    cell3.textContent = "6'4";
-    
-    // Append cells to the row
-    newRow.appendChild(cell1);
-    newRow.appendChild(cell2);
-    newRow.appendChild(cell3);
-    
-    // Append the new row to the table body
-    tableBody.appendChild(newRow);
-    
+    // Get all information
+    const id = getIdFromName(name);
+    const country = getCountryFromId(id);
+    const events = getEventsFromId(id);
+    const racket = getRacketFromId(id);
+    const handedness = getHandednessFromId(id);
+    const ranking = getRankingFromId(id);
+    const age = getAgeFromId(id);
+
+    nameAns = answer.name === name;
+    countryAns = answer.country === country;
+    racketAns = answer.racket === racket;
+    handednessAns = answer.handedness === handedness;
+    rankingAns = answer.ranking === ranking;
+    ageAns = answer.age === age;
+    if(answer.events === events){
+        eventsAns = "correct";
+    }
+    else if(answer.events.includes(events)){
+        eventsAns = "partially";
+    }   
+    else{
+        eventsAns = "incorrect";
+    }
+
+    createRow(name, nameAns, country, countryAns, events, eventsAns, racket, racketAns, handedness, handednessAns, ranking, rankingAns, age, ageAns);
+
     // Clear the input box
     inputBox.value = "";
+}
+
+let rowCount = 0;
+function createRow(name, nameAns, country, countryAns, events, eventsAns, racket, racketAns, handedness, handednessAns, ranking, rankingAns, age, ageAns){
+    // Increment row count, make new row
+    rowCount++;
+    const newRow = document.createElement("tr");
+    
+    // Append cells to row and assign class
+    const playerName = document.createElement("td");
+    playerName.textContent = name;
+    playerName.classList.add(getColor(nameAns));
+
+    const playerCountry = document.createElement("td");
+    playerCountry.textContent = country;
+    playerCountry.classList.add(getColor(countryAns));
+
+    const playerEvents = document.createElement("td");
+    playerEvents.textContent = events;
+    playerEvents.classList.add(getColor(eventsAns));
+
+    const playerRacket = document.createElement("td");
+    playerRacket.textContent = racket;
+    playerRacket.classList.add(getColor(racketAns));
+
+    const playerHandedness = document.createElement("td");
+    playerHandedness.textContent = handedness;
+    playerHandedness.classList.add(getColor(handednessAns));
+
+    const playerRanking = document.createElement("td");
+    playerRanking.textContent = ranking;
+    playerRanking.classList.add(getColor(rankingAns));
+
+    const playerAge = document.createElement("td");
+    playerAge.textContent = age;
+    playerAge.classList.add(getColor(ageAns));
+
+    // Append cells
+    newRow.appendChild(playerName);
+    newRow.appendChild(playerCountry);
+    newRow.appendChild(playerEvents);
+    newRow.appendChild(playerRacket);
+    newRow.appendChild(playerHandedness);
+    newRow.appendChild(playerRanking);
+    newRow.appendChild(playerAge);
+
+    // Assign colors
+
+
+    // Append new row
+    tableBody.appendChild(newRow);
+}
+
+// Method that returns the class name depending on if the check if true, false, or partially
+function getColor(matching){
+    if(matching === "correct"){
+        return "correct";
+    }
+    else if(matching === "partially"){
+        return "partially";
+    }
+    else if(matching){
+        return "correct"
+    }
+    else{
+        return "incorrect"
+    }
+}
+
+function getIdFromName(nameToFind) {
+    const foundItem = allPlayers.find(item => item.name === nameToFind);
+    return foundItem ? foundItem.id : null; // Return the id if found, or null if not found
+}
+
+function getCountryFromId(id) {
+    const foundItem = allPlayers.find(item => item.id === id);
+    return foundItem ? foundItem.country : null; // Return the id if found, or null if not found
+}
+
+function getEventsFromId(id) {
+    const foundItem = allPlayers.find(item => item.id === id);
+    return foundItem ? foundItem.events : null; // Return the id if found, or null if not found
+}
+
+function getRacketFromId(id) {
+    const foundItem = allPlayers.find(item => item.id === id);
+    return foundItem ? foundItem.racket : null; // Return the id if found, or null if not found
+}
+
+function getHandednessFromId(id) {
+    const foundItem = allPlayers.find(item => item.id === id);
+    return foundItem ? foundItem.handedness : null; // Return the id if found, or null if not found
+}
+
+function getRankingFromId(id) {
+    const foundItem = allPlayers.find(item => item.id === id);
+    return foundItem ? foundItem.ranking : null; // Return the id if found, or null if not found
+}
+
+function getAgeFromId(id) {
+    const foundItem = allPlayers.find(item => item.id === id);
+    return foundItem ? foundItem.age : null; // Return the id if found, or null if not found
 }

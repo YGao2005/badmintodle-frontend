@@ -10,10 +10,17 @@ body{
     color: #333;
 }
 
+body h1{
+    font-size: 4vw;
+    color: white;
+    text-align: center;
+    padding: 50px; 
+}
+
 .search-box{
     width: 600px;
     background: #fff;
-    margin: 200px auto 0;
+    margin: 20px auto 0;
     border-radius: 5px;
 }
 
@@ -77,4 +84,35 @@ button .fa-solid{
 
 .container{
     color: white;
+}
+
+.correct{
+    background-color: green;
+}
+
+.incorrect{
+    background-color: red;
+}
+
+.partially{
+    background-color: orange;
+}
+
+table{
+    margin: auto auto;
+    border-collapse: collapse;
+    width: 80%;
+}
+
+th{
+    padding: 50px 0px;
+}
+td {
+    border: 1px solid black;
+}
+
+th, td {
+    width: 50px; /* Set the width and height to create square cells */
+    height: 50px;
+    text-align: center; /* Center the content within cells */
 }
