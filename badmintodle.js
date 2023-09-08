@@ -38,6 +38,7 @@ fetch(apiEndpoint)
 
 
 //function to check if what's being typed in the search bar matches anything in the availableKeywords array
+
 inputBox.onkeyup = function(){
     let result = [];
     let input = inputBox.value;
@@ -52,6 +53,7 @@ inputBox.onkeyup = function(){
         resultsBox.innerHTML = '';
     }
 }
+
 
 //displaying the results from the onkeyup function below the search bar
 function display(result) {
@@ -114,17 +116,7 @@ document.addEventListener('keydown', function (event){
     }
 });
 
-inputBox.addEventListener('keyup', function (event) {
-    switch (event.key) {
-        case 'ArrowUp':
-        case 'ArrowDown':
-            // Do nothing on keyup for arrow keys to keep the highlight
-            break;
-    }
-});
-
 //function to highlight the selected item
-
 function highlightItem(index) {
     // Remove the "highlighted" class from all items
     const recommendationItems = document.querySelectorAll('.recommendation-item');
