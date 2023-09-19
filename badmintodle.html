@@ -5,10 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="badmintodle.css">
     <script src="https://kit.fontawesome.com/11f7d55dcc.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <title>Badmintodle</title>
 </head>
 <body>
+    <div class="popup-container" id="popup-container"></div>
     <h1>Badmintodle</h1>
+    <p class="subtitle">Wordle but for badminton players. Make a guess to get started.</p>
     <div class="search-box">
         <div class="row">
             <input type="text" id="input-box" placeholder="Search for a player" autocomplete="off">
@@ -22,12 +25,13 @@
             <thead>
                 <tr>
                     <th>Player Name</th>
+                    <th>Gender</th>
                     <th>Country</th>
                     <th>Event(s) Played</th>
-                    <th>Racket Used</th>
                     <th>Racket Hand</th>
-                    <th>BWF Ranking</th>
+                    <th>Highest Ranking</th>
                     <th>Age</th>
+                    <th>Height</th>
                 </tr>
             </thead>
             <tbody id="table-body">
@@ -35,6 +39,16 @@
             </tbody>
         </table>
     </div>
+        <div class="popup" id="popup">
+            <img src="check.png">
+            <h2>Congratulations!</h2>
+            <p>The answer to today's badmintodle is </p>
+            <h2 id="answer"></h2>
+            <button type="button" onclick="playAgain()">Play Again</button>
+        </div>
+    </div>
+    <footer>Project by Yang. Data on badminton players is as of 8/7/2023</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script src="badmintodle.js"></script>
 </body>
 </html>
