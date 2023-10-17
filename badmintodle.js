@@ -1,6 +1,7 @@
 // Now you can use gsap as an object containing GSAP's functionality
 //Connecting to apiEndpoint
-const apiEndpoint = 'http://localhost:8080/v1/api/players';
+const apiEndpoint = 'http://ec2-3-17-68-20.us-east-2.compute.amazonaws.com:8080/v1/api/players';
+
 
 //defining constants that I will reference in future functions
 const resultsBox = document.querySelector(".result-box");
@@ -165,16 +166,7 @@ function checkGuess(name){
     let ageAns = answer.age === age;
     let heightAns = answer.height === height;
     let genderAns = answer.gender === gender;
-    let eventsAns;
-    if(answer.events === events){
-        eventsAns = "correct";
-    }
-    else if(answer.events.includes(events)){
-        eventsAns = "partially";
-    }   
-    else{
-        eventsAns = "incorrect";
-    }
+    let eventsAns = answer.events === events;
 
     createRow(gender, genderAns, name, nameAns, country, countryAns, events, eventsAns, handedness, handednessAns, ranking, rankingAns, age, ageAns, height, heightAns);
 
